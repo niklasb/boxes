@@ -1,0 +1,56 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "boot_command": [
+        "<esc><wait>",
+        "auto ",
+        "url=http://{{.HTTPIP}}:{{.HTTPPort}}/preseed.cfg ",
+        "country=DE ",
+        "language=en ",
+        "locale=en_US ",
+        "keymap=de ",
+        "hostname={{.Name}} ",
+        "domain= ",
+        "debconf/frontend=noninteractive ",
+        "<enter><wait>"
+      ],
+      "boot_wait": "10s",
+      "disk_size": 51200,
+      "guest_os_type": "Debian_64",
+      "vm_name": "debian7-amd64",
+      "http_directory": ".",
+      "iso_url": "http://cdimage.debian.org/cdimage/release/7.6.0/amd64/iso-cd/debian-7.6.0-amd64-netinst.iso",
+      "iso_checksum_type": "sha512",
+      "iso_checksum": "f8f0e2ddc5bafd5eb4188cca40a7e0acd12be3bb425ce5ad56734df6e807237e8798e61ac6bb07b02056ef7e7621ceba5f84c00449be449005f9c4e47055333f",
+      "ssh_username": "sam",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "86400s",
+      "shutdown_command": "sudo shutdown -hP now",
+      "guest_additions_mode": "disable",
+      "vboxmanage": [
+        [ "modifyvm", "{{.Name}}", "--memory", "512" ],
+        [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "compression_level": "9",
+      "output": "debian7-amd64_{{.Provider}}.box"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
+      "scripts": [
+        "../scripts/packages.sh",
+        "../scripts/access.sh",
+        "../scripts/cleanup.sh"
+      ]
+    }
+  ]
+}
