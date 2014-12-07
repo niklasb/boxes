@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/bin/sh
 
 echo "Setting up vim..."
 
 # Write bootstrap vimrc
-cat > ~/.vimrc <<EOL
+cat > ~/.vimrc <<EOF
 set nocompatible        " be IMproved
 filetype off            " required, reverted below
 
@@ -36,13 +36,13 @@ Plugin 'altercation/vim-colors-solarized'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
-EOL
+EOF
 
 # Grab vundle
-git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim &> /dev/null
+git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim > /dev/null 2>&1
 
 # Install plugins
-vim -c PluginInstall -c qa &> /dev/null
+vim -c PluginInstall -c qa > /dev/null 2>&1
 
 # Fetch real vimrc
 curl -s https://gist.githubusercontent.com/saelo/da3e5ad7c6885472b1f0/raw/.vimrc > ~/.vimrc

@@ -1,8 +1,10 @@
-#!/bin/bash
+#!/bin/sh
 
 # Clean up
-apt-get -y --purge autoremove
-apt-get -y clean
+if command -v apt-get > /dev/null; then
+    apt-get -y --purge autoremove
+    apt-get -y clean
+fi
 
 # Remove files from cache
 find /var/cache -type f -delete -print

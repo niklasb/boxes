@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 #
 # Configure access to the box: Add SSH public keys
-# and set up password-less sudo for the vagrant user.
+# and set up password-less sudo for the user.
 #
 
 user=${SUDO_USER}
@@ -15,9 +15,10 @@ chown -R ${user}:${user} /home/${user}/.ssh
 chmod 700 /home/${user}/.ssh
 chmod 600 /home/${user}/.ssh/authorized_keys
 
-# Set up password-less sudo
-echo "${user} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/90_vagrant
-chmod 440 /etc/sudoers.d/90_vagrant
-
-# vagrant prefers no tty
-echo "Defaults !requiretty" >> /etc/sudoers
+# Enable password-less sudo
+sudoers='/etc/sudoers'
+if [ -e /usr/local/etc/sudoers ]; then
+    # We're probably on FreeBSD
+    sudoers='/usr/local/etc/sudoers'
+fi
+echo "${user} ALL=(ALL) NOPASSWD:ALL" >> ${sudoers}

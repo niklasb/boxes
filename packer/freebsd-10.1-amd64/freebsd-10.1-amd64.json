@@ -1,0 +1,51 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "boot_command": [
+        "2<wait10>",
+        "/bin/sh<enter><wait>",
+        "mdmfs -s 100m md1 /tmp<enter><wait>",
+        "mdmfs -s 100m md2 /mnt<enter><wait>",
+        "dhclient -l /tmp/dhclient.lease.em0 em0<enter><wait5>",
+        "fetch -o /tmp/setup.sh http://{{.HTTPIP}}:{{.HTTPPort}}/setup.sh<enter><wait>",
+        "bsdinstall script /tmp/setup.sh<enter>"
+      ],
+      "boot_wait": "9s",
+      "disk_size": 51200,
+      "guest_os_type": "FreeBSD_64",
+      "vm_name": "freebsd-10.1-amd64",
+      "http_directory": "./",
+      "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES/10.1/FreeBSD-10.1-RELEASE-amd64-disc1.iso",
+      "iso_checksum_type": "sha512",
+      "iso_checksum": "0a4962911741311ccc8e001e4800e9319d16d966f6f5ac15fad4ff789ff969a8b368f37ebbcc824642413fe352fac317ae4fde69ca9918e174027fd7ba066ce9",
+      "ssh_username": "sam",
+      "ssh_password": "vagrant",
+      "ssh_wait_timeout": "86400s",
+      "shutdown_command": "sudo shutdown -p now",
+      "guest_additions_mode": "disable",
+      "vboxmanage": [
+        [ "modifyvm", "{{.Name}}", "--memory", "1024" ],
+        [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "compression_level": "9",
+      "output": "freebsd-10.1-amd64_{{.Provider}}.box"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S sh '{{.Path}}'",
+      "scripts": [
+        "../scripts/freebsd/packages.sh",
+        "../scripts/common/access.sh",
+        "../scripts/common/cleanup.sh"
+      ]
+    }
+  ]
+}

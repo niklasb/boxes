@@ -21,7 +21,7 @@
       "disk_size": 51200,
       "guest_os_type": "Ubuntu_64",
       "vm_name": "ubuntu-14.04-amd64",
-      "http_directory": ".",
+      "http_directory": "./",
       "iso_url": "http://releases.ubuntu.com/14.04.1/ubuntu-14.04.1-server-amd64.iso",
       "iso_checksum_type": "sha512",
       "iso_checksum": "a612c60e926ce5363742417b6d2b3c6ce87ae1145a49ea3506b8a000c641ad22909129757dae2f96963b3fe26af72e6554fec4667a5927e18c1d895067adc138",
@@ -49,9 +49,9 @@
       "type": "shell",
       "execute_command": "echo 'vagrant'|{{.Vars}} sudo -S -E bash '{{.Path}}'",
       "scripts": [
-        "../scripts/packages.sh",
-        "../scripts/access.sh",
-        "../scripts/cleanup.sh"
+        "../scripts/debian/packages.sh",
+        "../scripts/common/access.sh",
+        "../scripts/common/cleanup.sh"
       ]
     }
   ]

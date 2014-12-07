@@ -6,17 +6,16 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Configure the box
-  config.vm.box = "debian7-amd64"
-  config.vm.hostname = "refbox"
+  config.vm.box = "freebsd-10.1-amd64"
+  config.vm.hostname = "bsdbox"
+  config.vm.synced_folder ".", "/vagrant", disabled: true
 
   # Configure SSH access
   config.ssh.username = "sam"
   config.ssh.private_key_path = "~/.ssh/id_rsa"
 
   # Do some basic provisioning
-  config.vm.provision "shell", path: "../scripts/debian/upgrade.sh"
   config.vm.provision "shell", path: "../scripts/common/vim.sh", privileged: false
   config.vm.provision "shell", path: "../scripts/common/zsh.sh", privileged: false
-  config.vm.provision "shell", path: "../scripts/debian/lockdown.sh"
 
 end
