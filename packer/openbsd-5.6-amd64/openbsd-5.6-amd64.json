@@ -1,0 +1,49 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "boot_command": [
+        "<wait10>",
+        "S<enter><wait>",
+        "dhclient -l /tmp/dhclient.lease.em0 em0<enter><wait5>",
+        "ftp -o /tmp/install.conf http://{{.HTTPIP}}:{{.HTTPPort}}/install.conf<enter><wait>",
+        "install -af /tmp/install.conf && echo 'sam ALL=(ALL) NOPASSWD:ALL' >> /mnt/etc/sudoers && reboot<enter>"
+      ],
+      "boot_wait": "10s",
+      "disk_size": 51200,
+      "guest_os_type": "OpenBSD_64",
+      "vm_name": "openbsd-5.6-amd64",
+      "http_directory": "./",
+      "iso_url": "http://ftp.spline.de/pub/OpenBSD/5.6/amd64/install56.iso",
+      "iso_checksum_type": "sha512",
+      "iso_checksum": "88629b637b57a638d33a91c477320df90e7d15c7cc3a3316fbbb1146d1c903ebd52f30f3eef0b7cb2ad363607fd762c627651e06962b573b075a861d34970603",
+      "ssh_username": "sam",
+      "ssh_password": "vagrant",
+      "ssh_wait_timeout": "86400s",
+      "shutdown_command": "sudo shutdown -hp now",
+      "guest_additions_mode": "disable",
+      "vboxmanage": [
+        [ "modifyvm", "{{.Name}}", "--memory", "1024" ],
+        [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "compression_level": "9",
+      "output": "openbsd-5.6-amd64_{{.Provider}}.box"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S sh '{{.Path}}'",
+      "scripts": [
+        "../scripts/openbsd/packages.sh",
+        "../scripts/common/access.sh",
+        "../scripts/common/cleanup.sh"
+      ]
+    }
+  ]
+}
