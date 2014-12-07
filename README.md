@@ -17,20 +17,20 @@ There are three main parts in this repository:
 3. Virtual machine profiles containing at least a Vagrantfile (everything else)
 
 
-With this spinning up a webserver can be as easy as
+With this spinning up a webserver in a VM can be as easy as
 
 ```bash
-cd /websrv
+cd ./websrv
 vagrant up
 ```
 
-And you'll have a apache webserver serving the content in websrv/webroot/ to you on http://localhost:8000.
+And you'll have an apache webserver serving the content in ./websrv/webroot/ to you on http://localhost:8000.
 
 Getting the base images
 -----------------------
-Before being able to use the VM profiles you'll need some base images (called [boxes](https://docs.vagrantup.com/v2/boxes.html)) for vagrant to use. You can either build those yourself using packer (see below) but you can also just grab prebuilt images from e.g. [here](https://vagrantcloud.com/hashicorp).
+Before being able to use the VM profiles you'll need some base images (called [boxes](https://docs.vagrantup.com/v2/boxes.html)) for vagrant to use. You can either build those yourself using packer but you can also just grab prebuilt images from e.g. [here](https://vagrantcloud.com/hashicorp).
 
-Building the images with packer is straight forward:
+Building the boxes yourself with packer is straight forward:
 
 ```bash
 cd packer/ubuntu-14.04-amd64
@@ -39,6 +39,6 @@ packer-io build ubuntu-14.04-amd64.json
 vagrant box add ubuntu-14.04-amd64 ubuntu-14.04-amd64_virtualbox.box
 ```
 
-Note: You may want to change the keyboard layout and timezone settings for the boxes as well as the username. Also you'll need to configure the public SSH keys to use in packer/scripts/access.sh ;)
+Note: You may want to change the keyboard layout and timezone settings for the boxes as well as the username. Also you'll need to configure the public SSH keys to use in packer/scripts/common/access.sh ;)
 
 If you're using different boxes be sure to change the config.vm.box setting in the Vagrantfiles.
