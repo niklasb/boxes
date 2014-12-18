@@ -1,0 +1,58 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "boot_command": [
+        "<enter><esc><enter><wait>",
+        "install ",
+        "auto ",
+        "url=http://{{.HTTPIP}}:{{.HTTPPort}}/preseed.cfg ",
+        "locale=en_US.UTF-8 ",
+        "country=DE ",
+        "language=en ",
+        "keymap=de ",
+        "hostname={{.Name}} ",
+        "domain= ",
+        "debconf/frontend=noninteractive ",
+        "<enter><wait>",
+        "<wait10><enter>"
+      ],
+      "boot_wait": "10s",
+      "disk_size": 51200,
+      "guest_os_type": "Ubuntu",
+      "vm_name": "ubuntu-14.04-i386",
+      "http_directory": "./",
+      "iso_url": "http://releases.ubuntu.com/14.04.1/ubuntu-14.04.1-server-i386.iso",
+      "iso_checksum_type": "sha512",
+      "iso_checksum": "6e6d2a71a627e5b1f319b05e034198c7dcc417d0424616e2252555cb4e8cff36a6a88397924b6a36ccfdbb04aeb8848b0f6fb75f242f1626445a940c90cef873",
+      "ssh_username": "sam",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "86400s",
+      "shutdown_command": "sudo shutdown -hP now",
+      "guest_additions_mode": "disable",
+      "vboxmanage": [
+        [ "modifyvm", "{{.Name}}", "--memory", "1024" ],
+        [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "compression_level": "9",
+      "output": "ubuntu-14.04-i386_{{.Provider}}.box"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant'|{{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "scripts": [
+        "../scripts/debian/packages.sh",
+        "../scripts/common/access.sh",
+        "../scripts/common/cleanup.sh"
+      ]
+    }
+  ]
+}
