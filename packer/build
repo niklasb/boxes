@@ -1,0 +1,16 @@
+#!/bin/bash
+if [[ $# != 2 ]]; then
+  echo >&2 "Usage: $0 target provider"
+  exit 1
+fi
+fname=`mktemp`
+USER=`whoami`
+PUBKEY=`cat ~/.ssh/id_rsa.pub`
+TIMEZONE=Europe/Berlin
+python2 create_template.py target=$1 provider=$2 \
+    user_name=$USER \
+    "user_pubkey=$PUBKEY" \
+    "time_zone=$TIMEZONE" \
+      > $fname || (rm $fname; exit 1)
+echo "Using template at $fname"
+packer-io build $fname && rm $fname
