@@ -47,9 +47,9 @@
       "type": "shell",
       "execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
       "scripts": [
-        "../scripts/debian/packages.sh",
-        "../scripts/common/access.sh",
-        "../scripts/common/cleanup.sh"
+        "../../scripts/debian/packages.sh",
+        "../../scripts/common/access.sh",
+        "../../scripts/common/cleanup.sh"
       ]
     }
   ]

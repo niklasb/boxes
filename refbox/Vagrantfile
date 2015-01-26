@@ -1,22 +1,12 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
-
-# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
-VAGRANTFILE_API_VERSION = "2"
-
-Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+Vagrant.configure("2") do |config|
   # Configure the box
-  config.vm.box = "debian7-amd64"
-  config.vm.hostname = "refbox"
+  config.vm.box = "ubuntu-14.04-i386"
+  config.vm.hostname = "ubu"
 
   # Configure SSH access
-  config.ssh.username = "sam"
+  config.ssh.username = "niklas"
   config.ssh.private_key_path = "~/.ssh/id_rsa"
 
   # Do some basic provisioning
-  config.vm.provision "shell", path: "../scripts/debian/upgrade.sh"
-  config.vm.provision "shell", path: "../scripts/common/vim.sh", privileged: false
-  config.vm.provision "shell", path: "../scripts/common/zsh.sh", privileged: false
-  config.vm.provision "shell", path: "../scripts/debian/lockdown.sh"
-
+  config.vm.provision "shell", path: "../scripts/debian/packages.sh"
 end

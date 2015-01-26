@@ -13,6 +13,7 @@ echo "$pubkey" > .ssh/authorized_keys
 
 chmod 700 .ssh
 chmod 600 .ssh/*
+chown -R $user:$user .ssh
 
 passwd -d $user
 

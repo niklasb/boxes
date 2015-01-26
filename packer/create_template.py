@@ -41,7 +41,7 @@ def ubuntu_boot_command(data):
   return [
     "<esc><esc><enter><wait>",
     "/install/vmlinuz ",
-    "preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/preseed-ubuntu.cfg ",
+    "preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/ubuntu/preseed.cfg ",
     "debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
     "passwd/username=" + data["user_name"] + " ",
     "hostname={{.Name}} ",
