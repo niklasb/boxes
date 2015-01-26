@@ -108,8 +108,8 @@ def template(data):
         "USER_PUBKEY=" + data["user_pubkey"],
       ],
       "scripts": data["extra_scripts"] + [
-        "scripts/common/cleanup.sh",
-        "scripts/common/access.sh"
+        "../scripts/common/cleanup.sh",
+        "../scripts/common/access.sh"
       ]
     }],
     "post-processors": [{
