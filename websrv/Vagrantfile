@@ -1,16 +1,10 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
-
-# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
-VAGRANTFILE_API_VERSION = "2"
-
-Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+Vagrant.configure("2") do |config|
   # Configure the box
-  config.vm.box = "ubuntu-14.04-amd64"
+  config.vm.box = "ubuntu-14.04-i386-qemu"
   config.vm.hostname = "websrv"
 
   # Configure SSH access
-  config.ssh.username = "sam"
+  config.ssh.username = "niklas"
   config.ssh.private_key_path = "~/.ssh/id_rsa"
 
   # Forward guest:80 to host:8000
@@ -22,12 +16,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder "webroot", "/var/www/html"
 
   # VirtualBox customization
-  config.vm.provider "virtualbox" do |vb|
-    vb.customize ["modifyvm", :id, "--memory", "1024"]
+  config.vm.provider "kvm" do |p|
+    p.memory_size = "1GiB"
   end
 
   # Do some basic provisioning
   config.vm.provision "shell", path: "../scripts/ubuntu/websrv.sh"
-  config.vm.provision "shell", path: "../scripts/common/lockdown.sh"
 
 end
