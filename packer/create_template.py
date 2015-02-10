@@ -43,7 +43,9 @@ def ubuntu_boot_command(data):
     "/install/vmlinuz ",
     "preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/ubuntu/preseed.cfg ",
     "debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
-    "passwd/username=" + data["user_name"] + " ",
+    "passwd/username=vagrant ",
+    "passwd/user-password=vagrant ",
+    "passwd/user-password-again=vagrant ",
     "hostname={{.Name}} ",
     "time/zone=" + data["time_zone"] + " ",
     "fb=false debconf/frontend=noninteractive ",
@@ -54,7 +56,7 @@ def ubuntu_boot_command(data):
 
 def ubuntu_extra_scripts(data):
   return [
-    "../scripts/debian/packages.sh",
+    #"../scripts/debian/packages.sh",
   ]
 
 def provider(data):
@@ -90,8 +92,8 @@ def template(data):
     "iso_url": data["iso_url"],
     "iso_checksum_type": data["iso_checksum_type"],
     "iso_checksum": data["iso_checksum"],
-    "ssh_username": data["user_name"],
-    "ssh_password": "password",
+    "ssh_username": "vagrant",
+    "ssh_password": "vagrant",
     "ssh_port": 22,
     "ssh_wait_timeout": "86400s",
     "boot_wait": "10s",
@@ -103,18 +105,15 @@ def template(data):
     "builders": [builder],
     "provisioners": [{
       "type": "shell",
-      "execute_command": "echo 'password'|{{.Vars}} sudo -S -E bash '{{.Path}}'",
-      "environment_vars": [
-        "USER_PUBKEY=" + data["user_pubkey"],
-      ],
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
       "scripts": data["extra_scripts"] + [
+        "../scripts/common/sudo.sh",
         "../scripts/common/cleanup.sh",
-        "../scripts/common/access.sh"
       ]
     }],
     "post-processors": [{
       "type": "vagrant",
-      "compression_level": "9",
+      "compression_level": "6",
       "output": vm_name + ".box",
     }],
   }

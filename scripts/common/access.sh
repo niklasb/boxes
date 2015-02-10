@@ -1,11 +1,23 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Configure access to the box: Add SSH pubkey, remove password
 # and set up password-less sudo.
 #
 
-user=$SUDO_USER
-pubkey=$USER_PUBKEY
+user=${SUDO_USER:-$1}
+pubkey=${USER_PUBKEY:-$2}
+if [[ "$user" == "" || "$pubkey" == "" ]]; then
+    echo "user or pubkey not set"
+    exit 1
+fi
+
+if getent passwd $user &>/dev/null; then
+    echo "user already exists."
+    exit 1
+fi
+
+groupadd $user
+useradd $user -m -g $user
 
 cd /home/$user
 mkdir -p .ssh
