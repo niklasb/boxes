@@ -56,7 +56,7 @@ def ubuntu_boot_command(data):
 
 def ubuntu_extra_scripts(data):
   return [
-    #"../scripts/debian/packages.sh",
+    "../scripts/debian/packages.sh",
   ]
 
 def provider(data):
