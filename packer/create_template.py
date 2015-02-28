@@ -65,7 +65,7 @@ def provider(data):
       "type": "virtualbox-iso",
       "guest_os_type": data["vbox_guest_os_type"],
       "disk_size": 50000,
-      "guest_additions_mode": "disable",
+      "guest_additions_mode": "upload",
       "vboxmanage": [
         [ "modifyvm", "{{.Name}}", "--memory", "512" ],
         [ "modifyvm", "{{.Name}}", "--cpus", "1" ]
@@ -80,6 +80,12 @@ def provider(data):
       "net_device": "virtio-net",
       "disk_interface": "virtio",
     },
+  }[data["provider"]]
+
+def provider_extra_scripts(data):
+  return {
+    "vbox": ["../scripts/common/install-guest-additions.sh"],
+    "qemu": [],
   }[data["provider"]]
 
 def template(data):
@@ -106,7 +112,7 @@ def template(data):
     "provisioners": [{
       "type": "shell",
       "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
-      "scripts": data["extra_scripts"] + [
+      "scripts": data["extra_scripts"] + provider_extra_scripts(data) + [
         "../scripts/common/sudo.sh",
         "../scripts/common/cleanup.sh",
       ]
