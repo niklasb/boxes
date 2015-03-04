@@ -84,7 +84,10 @@ def provider(data):
 
 def provider_extra_scripts(data):
   return {
-    "vbox": ["../scripts/common/install-guest-additions.sh"],
+    "vbox": [
+      "../scripts/common/reboot.sh",
+      "../scripts/common/install-guest-additions.sh",
+    ],
     "qemu": [],
   }[data["provider"]]
 

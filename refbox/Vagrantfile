@@ -2,12 +2,12 @@ $cores = 1
 $mem = 512
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu-14.04-i386-1"
+  config.vm.box = "ubuntu-14.04-amd64-1"
   config.vm.hostname = "refbox"
 
-  config.vm.provider "kvm" do |v|
-    v.memory_size = '%dm' % $mem
-    v.core_number = $cores
+  config.vm.provider "libvirt" do |v|
+    v.memory = $mem
+    v.cpus = $cores
   end
   config.vm.provider "virtualbox" do |v|
     config.vm.synced_folder './', '/vagrant', type: '9p', readonly: true
