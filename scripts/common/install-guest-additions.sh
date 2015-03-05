@@ -6,6 +6,7 @@ mkdir /tmp/isomount
 mount -t iso9660 -o loop /home/vagrant/VBoxGuestAdditions.iso /tmp/isomount
 
 # Install the drivers
+echo Installing guest additions for `uname -a`
 /tmp/isomount/VBoxLinuxAdditions.run
 
 # Cleanup
