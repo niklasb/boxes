@@ -19,17 +19,14 @@ Plugin 'gmarik/Vundle.vim'
 "
 " Plugins
 "
-Plugin 'ervandew/supertab'
 Plugin 'scrooloose/nerdtree'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'tpope/vim-fugitive'
 Plugin 'bling/vim-airline'
 Plugin 'scrooloose/syntastic'
-Plugin 'majutsushi/tagbar'
 Plugin 'rking/ag.vim'
-Plugin 'kien/ctrlp.vim'
 Plugin 'zhaocai/GoldenView.Vim'
+Plugin 'Valloric/YouCompleteMe'
 
 Plugin 'altercation/vim-colors-solarized'
 
@@ -43,6 +40,10 @@ git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim > /d
 
 # Install plugins
 vim -c PluginInstall -c qa > /dev/null 2>&1
+
+# Finish YouCompleteMe installation
+cd ~/.vim/bundle/YouCompleteMe
+./install.sh --clang-completer
 
 # Fetch real vimrc
 curl -s https://gist.githubusercontent.com/saelo/da3e5ad7c6885472b1f0/raw/.vimrc > ~/.vimrc
