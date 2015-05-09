@@ -23,11 +23,10 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
-Plugin 'scrooloose/syntastic'
 Plugin 'rking/ag.vim'
 Plugin 'zhaocai/GoldenView.Vim'
 Plugin 'Valloric/YouCompleteMe'
-
+ 
 Plugin 'altercation/vim-colors-solarized'
 
 " All of your Plugins must be added before the following line

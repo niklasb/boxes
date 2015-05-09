@@ -21,7 +21,7 @@
       "boot_wait": "10s",
       "disk_size": 51200,
       "guest_os_type": "Ubuntu_64",
-      "vm_name": "ubuntu-14.10-amd64",
+      "vm_name": "utopic64",
       "http_directory": "./",
       "iso_url": "http://releases.ubuntu.com/14.10/ubuntu-14.10-server-amd64.iso",
       "iso_checksum_type": "sha256",
