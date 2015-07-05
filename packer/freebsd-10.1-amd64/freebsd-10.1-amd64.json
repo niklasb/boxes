@@ -25,7 +25,7 @@
       "shutdown_command": "sudo shutdown -p now",
       "guest_additions_mode": "disable",
       "vboxmanage": [
-        [ "modifyvm", "{{.Name}}", "--memory", "1024" ],
+        [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
         [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
       ]
     }
