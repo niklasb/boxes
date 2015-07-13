@@ -20,13 +20,15 @@ Plugin 'gmarik/Vundle.vim'
 " Plugins
 "
 Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdcommenter'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
+Plugin 'edkolev/tmuxline.vim'
 Plugin 'rking/ag.vim'
 Plugin 'zhaocai/GoldenView.Vim'
 Plugin 'Valloric/YouCompleteMe'
- 
+
 Plugin 'altercation/vim-colors-solarized'
 
 " All of your Plugins must be added before the following line
@@ -42,7 +44,7 @@ vim -c PluginInstall -c qa > /dev/null 2>&1
 
 # Finish YouCompleteMe installation
 cd ~/.vim/bundle/YouCompleteMe
-./install.sh --clang-completer
+./install.sh --clang-completer --gocode-completer
 
 # Fetch real vimrc
 curl -s https://gist.githubusercontent.com/saelo/da3e5ad7c6885472b1f0/raw/.vimrc > ~/.vimrc
