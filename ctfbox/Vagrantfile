@@ -1,0 +1,28 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  # Configure the box.
+  config.vm.box = "ubuntu-14.04-amd64"
+  config.vm.hostname = "ctfbox"
+
+  # Configure SSH access.
+  config.ssh.username = "sam"
+  config.ssh.private_key_path = "~/.ssh/id_rsa"
+
+  # Forward ports. Modify as needed.
+  config.vm.network "forwarded_port", guest: 4444, host: 4444
+
+  # Do some basic provisioning.
+  config.vm.provision "shell", path: "../scripts/debian/upgrade.sh"
+  config.vm.provision "shell", path: "../scripts/common/vim.sh", privileged: false
+  config.vm.provision "shell", path: "../scripts/common/zsh.sh", privileged: false
+  config.vm.provision "shell", path: "../scripts/debian/lockdown.sh"
+
+  # Install CTF related packages.
+  config.vm.provision "shell", path: "../scripts/packages/peda.sh", privileged: false
+  config.vm.provision "shell", path: "../scripts/packages/pin.sh", privileged: false
+end
