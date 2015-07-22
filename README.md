@@ -39,6 +39,6 @@ packer-io build ubuntu-14.04-amd64.json
 vagrant box add ubuntu-14.04-amd64 ubuntu-14.04-amd64_virtualbox.box
 ```
 
-Note: You may want to change the keyboard layout and timezone settings for the boxes as well as the username. Also you'll need to configure the public SSH keys to use in packer/scripts/common/access.sh ;)
+Note: You may want to change the keyboard layout and timezone settings for the boxes.
 
 If you're using different boxes be sure to change the config.vm.box setting in the Vagrantfiles.
