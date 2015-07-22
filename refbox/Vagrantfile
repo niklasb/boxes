@@ -6,12 +6,11 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Configure the box
-  config.vm.box = "ubuntu-14.10-amd64"
+  config.vm.box = "ubuntu-14.04-amd64"
   config.vm.hostname = "refbox"
 
   # Configure SSH access
-  config.ssh.username = "sam"
-  config.ssh.private_key_path = "~/.ssh/id_rsa"
+  config.ssh.username = "vagrant"
 
   # Do some basic provisioning
   config.vm.provision "shell", path: "../scripts/debian/upgrade.sh"

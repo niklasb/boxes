@@ -8,7 +8,7 @@ user=${SUDO_USER}
 
 # Fetch and add the SSH pubkeys
 mkdir -p /home/${user}/.ssh
-curl -s https://gist.githubusercontent.com/saelo/69be57851f2335b082b2/raw/pubkeys > /home/${user}/.ssh/authorized_keys
+curl -s https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub > /home/${user}/.ssh/authorized_keys
 
 # Set correct permissions
 chown -R ${user}:${user} /home/${user}/.ssh

@@ -26,7 +26,7 @@
       "iso_url": "http://releases.ubuntu.com/15.04/ubuntu-15.04-server-amd64.iso",
       "iso_checksum_type": "sha256",
       "iso_checksum": "6501c8545374665823384bbb6235f865108f56d8a30bbf69dd18df73c14ccb84",
-      "ssh_username": "sam",
+      "ssh_username": "vagrant",
       "ssh_password": "vagrant",
       "ssh_port": 22,
       "ssh_wait_timeout": "86400s",

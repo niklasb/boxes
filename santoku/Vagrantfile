@@ -10,8 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = "santoku"
 
   # Configure SSH access
-  config.ssh.username = "sam"
-  config.ssh.private_key_path = "~/.ssh/id_rsa"
+  config.ssh.username = "vagrant"
 
   # Do some basic provisioning
   config.vm.provision "shell", path: "../scripts/debian/upgrade.sh"

@@ -3,7 +3,7 @@ DISTRIBUTIONS="base.txz kernel.txz ports.txz"
 
 #!/bin/sh
 
-user="sam"
+user="vagrant"
 
 echo 'nameserver 8.8.8.8' >> /etc/resolv.conf
 

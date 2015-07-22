@@ -19,7 +19,7 @@
       "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES/10.1/FreeBSD-10.1-RELEASE-amd64-disc1.iso",
       "iso_checksum_type": "sha512",
       "iso_checksum": "0a4962911741311ccc8e001e4800e9319d16d966f6f5ac15fad4ff789ff969a8b368f37ebbcc824642413fe352fac317ae4fde69ca9918e174027fd7ba066ce9",
-      "ssh_username": "sam",
+      "ssh_username": "vagrant",
       "ssh_password": "vagrant",
       "ssh_wait_timeout": "86400s",
       "shutdown_command": "sudo shutdown -p now",

@@ -7,7 +7,7 @@
         "S<enter><wait>",
         "dhclient -l /tmp/dhclient.lease.em0 em0<enter><wait5>",
         "ftp -o /tmp/install.conf http://{{.HTTPIP}}:{{.HTTPPort}}/install.conf<enter><wait>",
-        "install -af /tmp/install.conf && echo 'sam ALL=(ALL) NOPASSWD:ALL' >> /mnt/etc/sudoers && reboot<enter>"
+        "install -af /tmp/install.conf && echo 'vagrant ALL=(ALL) NOPASSWD:ALL' >> /mnt/etc/sudoers && reboot<enter>"
       ],
       "boot_wait": "10s",
       "disk_size": 51200,
@@ -17,7 +17,7 @@
       "iso_url": "http://ftp.spline.de/pub/OpenBSD/5.6/amd64/install56.iso",
       "iso_checksum_type": "sha512",
       "iso_checksum": "88629b637b57a638d33a91c477320df90e7d15c7cc3a3316fbbb1146d1c903ebd52f30f3eef0b7cb2ad363607fd762c627651e06962b573b075a861d34970603",
-      "ssh_username": "sam",
+      "ssh_username": "vagrant",
       "ssh_password": "vagrant",
       "ssh_wait_timeout": "86400s",
       "shutdown_command": "sudo shutdown -hp now",

@@ -19,7 +19,7 @@
       "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/releases/i386/i386/ISO-IMAGES/9.3/FreeBSD-9.3-RELEASE-i386-disc1.iso",
       "iso_checksum_type": "sha256",
       "iso_checksum": "cab6aad9c3d5ea6a3fb4059f808225c67f1edaea730c555a86a9707ac41ba75d",
-      "ssh_username": "sam",
+      "ssh_username": "vagrant",
       "ssh_password": "vagrant",
       "ssh_wait_timeout": "86400s",
       "shutdown_command": "sudo shutdown -p now",
