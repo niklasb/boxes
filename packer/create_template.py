@@ -1,6 +1,9 @@
 import json
 import sys
 
+def get_ubuntu_version(data):
+  return data["target"].split("-")[1]
+
 def target_data(data):
   return {
     "ubuntu-14.04-amd64": {
@@ -35,11 +38,48 @@ def target_data(data):
       "vbox_guest_os_type": "Ubuntu",
       "extra_scripts": ubuntu_extra_scripts(data),
     },
+    "ubuntu-15.04-amd64": {
+      "iso_url": "http://releases.ubuntu.com/15.04/ubuntu-15.04-server-amd64.iso",
+      "iso_checksum_type": "sha256",
+      "iso_checksum": "6501c8545374665823384bbb6235f865108f56d8a30bbf69dd18df73c14ccb84",
+      "boot_command": ubuntu_boot_command(data),
+      "vbox_guest_os_type": "Ubuntu_64",
+      "extra_scripts": ubuntu_extra_scripts(data),
+    },
+    "ubuntu-15.04-i386": {
+      "iso_url": "http://releases.ubuntu.com/15.04/ubuntu-15.04-server-i386.iso",
+      "iso_checksum_type": "sha256",
+      "iso_checksum": "f510169ddc03121d11a627ae3a231e1272d8e4d75f9ef76f73daa5b809c5b6d8",
+      "boot_command": ubuntu_boot_command(data),
+      "vbox_guest_os_type": "Ubuntu_64",
+      "extra_scripts": ubuntu_extra_scripts(data),
+    },
+    "ubuntu-15.10-amd64": {
+      "iso_url": "http://releases.ubuntu.com/15.10/ubuntu-15.10-server-amd64.iso",
+      "iso_checksum_type": "sha256",
+      "iso_checksum": "86aa35a986eba6e5ad30e3d486d57efe6803ae7ea4859b0216953e9e62871131",
+      "boot_command": ubuntu_boot_command(data),
+      "vbox_guest_os_type": "Ubuntu_64",
+      "extra_scripts": ubuntu_extra_scripts(data),
+    },
+    "ubuntu-15.10-i386": {
+      "iso_url": "http://releases.ubuntu.com/15.10/ubuntu-15.10-server-i386.iso",
+      "iso_checksum_type": "sha256",
+      "iso_checksum": "fa97768bdc3f198b82180d39bf0c26f021ab716f5da98094cd220771095e3394",
+      "boot_command": ubuntu_boot_command(data),
+      "vbox_guest_os_type": "Ubuntu_64",
+      "extra_scripts": ubuntu_extra_scripts(data),
+    },
   }[data["target"]]
 
 def ubuntu_boot_command(data):
+  if get_ubuntu_version(data) <= "15.04":
+    intro = "<esc><esc><enter><wait>"
+  else:
+    intro = "<enter><wait><f6><esc>"
+
   return [
-    "<esc><esc><enter><wait>",
+    intro,
     "/install/vmlinuz ",
     "preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/ubuntu/preseed.cfg ",
     "debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
