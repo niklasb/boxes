@@ -7,17 +7,17 @@ def get_ubuntu_version(data):
 def target_data(data):
   return {
     "ubuntu-14.04-amd64": {
-      "iso_url": "http://releases.ubuntu.com/14.04.1/ubuntu-14.04.1-server-amd64.iso",
+      "iso_url": "http://releases.ubuntu.com/14.04.4/ubuntu-14.04.4-server-amd64.iso",
       "iso_checksum_type": "sha256",
-      "iso_checksum": "946a6077af6f5f95a51f82fdc44051c7aa19f9cfc5f737954845a6050543d7c2",
+      "iso_checksum": "07e4bb5569814eab41fafac882ba127893e3ff0bdb7ec931c9b2d040e3e94e7a",
       "boot_command": ubuntu_boot_command(data),
       "vbox_guest_os_type": "Ubuntu_64",
       "extra_scripts": ubuntu_extra_scripts(data),
     },
     "ubuntu-14.04-i386": {
-      "iso_url": "http://releases.ubuntu.com/14.04.1/ubuntu-14.04.1-server-i386.iso",
+      "iso_url": "http://releases.ubuntu.com/14.04.4/ubuntu-14.04.4-server-i386.iso",
       "iso_checksum_type": "sha256",
-      "iso_checksum": "976044842804eafc18390505508958b559c131211160ecae5e60694bdf171f78",
+      "iso_checksum": "e20cf9e0812b52287ca22ac1815bc933c0cfef2be88191110b697d8943bef19e",
       "boot_command": ubuntu_boot_command(data),
       "vbox_guest_os_type": "Ubuntu",
       "extra_scripts": ubuntu_extra_scripts(data),
@@ -51,7 +51,7 @@ def target_data(data):
       "iso_checksum_type": "sha256",
       "iso_checksum": "f510169ddc03121d11a627ae3a231e1272d8e4d75f9ef76f73daa5b809c5b6d8",
       "boot_command": ubuntu_boot_command(data),
-      "vbox_guest_os_type": "Ubuntu_64",
+      "vbox_guest_os_type": "Ubuntu",
       "extra_scripts": ubuntu_extra_scripts(data),
     },
     "ubuntu-15.10-amd64": {
@@ -67,7 +67,23 @@ def target_data(data):
       "iso_checksum_type": "sha256",
       "iso_checksum": "fa97768bdc3f198b82180d39bf0c26f021ab716f5da98094cd220771095e3394",
       "boot_command": ubuntu_boot_command(data),
+      "vbox_guest_os_type": "Ubuntu",
+      "extra_scripts": ubuntu_extra_scripts(data),
+    },
+    "ubuntu-16.04-amd64": {
+      "iso_url": "http://releases.ubuntu.com/16.04/ubuntu-16.04-server-amd64.iso",
+      "iso_checksum_type": "sha256",
+      "iso_checksum": "b8b172cbdf04f5ff8adc8c2c1b4007ccf66f00fc6a324a6da6eba67de71746f6",
+      "boot_command": ubuntu_boot_command(data),
       "vbox_guest_os_type": "Ubuntu_64",
+      "extra_scripts": ubuntu_extra_scripts(data),
+    },
+    "ubuntu-16.04-i386": {
+      "iso_url": "http://releases.ubuntu.com/16.04/ubuntu-16.04-server-i386.iso",
+      "iso_checksum_type": "sha256",
+      "iso_checksum": "8d52f3127f2b7ffa97698913b722e3219187476a9b936055d737f3e00aecd24d",
+      "boot_command": ubuntu_boot_command(data),
+      "vbox_guest_os_type": "Ubuntu",
       "extra_scripts": ubuntu_extra_scripts(data),
     },
   }[data["target"]]
@@ -76,22 +92,17 @@ def ubuntu_boot_command(data):
   if get_ubuntu_version(data) <= "15.04":
     intro = "<esc><esc><enter><wait>"
   else:
-    intro = "<enter><wait><f6><esc>"
+    intro = "<enter><wait><f6><esc>" + "<bs>"*100
 
+  # see http://serverfault.com/questions/143296/
+  # and https://www.debian.org/releases/jessie/i386/apbs02.html.en
   return [
     intro,
-    "/install/vmlinuz ",
-    "preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/ubuntu/preseed.cfg ",
-    "debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
-    "passwd/username=vagrant ",
-    "passwd/user-password=vagrant ",
-    "passwd/user-password-again=vagrant ",
+    "/install/vmlinuz initrd=/install/initrd.gz auto=true priority=critical ",
+    "url=http://{{.HTTPIP}}:{{.HTTPPort}}/ubuntu/preseed.cfg ",
     "hostname={{.Name}} ",
     "time/zone=" + data["time_zone"] + " ",
-    "fb=false debconf/frontend=noninteractive ",
-    "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA ",
-    "keyboard-configuration/variant=USA console-setup/ask_detect=false ",
-    "initrd=/install/initrd.gz -- <enter>"
+    "-- <enter>"
   ]
 
 def ubuntu_extra_scripts(data):
